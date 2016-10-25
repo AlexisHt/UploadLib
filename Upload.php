@@ -102,12 +102,33 @@
 			else
 			{
 
-				$image_fonction = "ImageCreateFrom" . $this->fileExtension;
+			            switch ($this->fileExtension) {
+			                case 'jpg';
+			                case 'jpeg';
+			                    $extension_upload = "jpeg";
+			                    break;
+			                case 'png':
+			                    $extension_upload = "png";
+			                    break;
+			                case 'gif':
+			                    $extension_upload = "gif";
+			                     break;
+		                    case 'svg':
+			                    $extension_upload = "svg";
+			                     break;
+									}
+
+				$image_fonction = "ImageCreateFrom" . $extension_upload;
+
            		$image = $image_fonction($this->fileAdress);
+
            		$width = imagesx($image);
 				$height = imagesy($image);
 
+
+
 				if ($this->fileShape == "rectangle" ) {
+
 
 					if(!empty($this->$rectWidth) || !empty($this->$rectHeight)){
 
@@ -137,19 +158,19 @@
 
 						$resize= imagecreatetruecolor($new_width,$new_height);
 						imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-						$format = 'Image' . $this->fileExtension;
-               			$format($resize, $this->fileAdress);
+						$format = 'ImageCreateFrom' . $extension_upload;
+						$image = $format($this->fileAdress);
 
                			imagedestroy($image);
 
 				}
 
-				else if($this->fileShape = "carre"){
+				else if($this->fileShape == "carre"){
 
-						if($this->$squareDim){
+						if($this->squareDim){
 
-						$new_width = $this->$squareDim;
-						$new_height = $this->$squareDim;
+						$new_width = $this->squareDim;
+						$new_height = $this->squareDim;
 
 						}
 						else{
@@ -160,23 +181,41 @@
 						}
 
 
-							$new_width = $this->$squareDim;
-							$new_height =  ($new_width * $height) / $width;
+							$new_width = $this->squareDim;
+							$new_height = ($new_width * $height) / $width;
 							$resize = imagecreatetruecolor($new_width,$new_height);
 
-							if($position == 'centre2'){
+						if($width<$height)
+						{
+
+							if($this->fileCropPosition == 'centre2'){
 								imagecopyresized($resize, $image, 0, 0, 0, (($new_height-$new_width)/2), $new_width, $new_height, $width, $height);
 							}
-							else if($position == 'haut'){
+							else if($this->fileCropPosition == 'haut'){
 								imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 							}
-							else if($position == 'bas'){
+							else if($this->fileCropPosition == 'bas'){
 								imagecopyresized($resize, $image, 0, 0, 0, ($new_height-$new_width), $new_width, $new_height, $width, $height);
 							}
 
+						}
+						else
+						{
+
+							if($this->fileCropPosition == 'centre'){
+								imagecopyresized($resize, $image, (($new_height-$new_width)/2), 0, 0, 0, $new_width, $new_height, $width, $height);
+							}
+							else if($this->fileCropPosition == 'gauche'){
+								imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+							}
+							else if($this->fileCropPosition == 'droite'){
+								imagecopyresized($resize, $image, ($new_height-$new_width), 0, 0, 0, $new_width, $new_height, $width, $height);
+							}
+						}
+
 							$resize= imagecreatetruecolor($new_width,$new_height);
 							imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-							$format = 'Image' . $this->fileExtension;
+							$format = 'Image' . $extension_upload;
 	               			$format($resize, $this->fileAdress);
 
 	               			imagedestroy($image);
@@ -185,8 +224,8 @@
 				}
 			}
 		}
-
-
 }
+
+
 
 ?>
