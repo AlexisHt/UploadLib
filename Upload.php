@@ -105,11 +105,11 @@
 
 				if ($this->FileShape = "rectangle" ) {
 
-					if(!empty($this->$rectWidth) || !empty($this->$rectHeight){
+					if(!empty($this->$rectWidth) || !empty($this->$rectHeight)){
 
 					$new_width = $this->rectWidth;
 					$new_height = $this->$rectHeight;
-					
+
 					}
 					else{
 
@@ -117,7 +117,7 @@
 					$new_height = $height;
 
 					}
-						
+
 						if($width>$height)
 						{
 							//format horizontal
@@ -140,13 +140,13 @@
 
 				}
 
-				else if($this->FileShape = "carre" && $width == $height)){
+				else if($this->FileShape = "carre" && $width == $height){
 
 						if($this->$squareDim){
 
 						$new_width = $this->$squareDim;
 						$new_height = $this->$squareDim;
-						
+
 						}
 						else{
 
@@ -154,8 +154,8 @@
 						$new_height = $height;
 
 						}
-						
-					
+
+
 							$new_width = $this->$squareDim;
 							$new_height =  ($new_width * $height) / $width;
 							$resize = imagecreatetruecolor($new_width,$new_height);
