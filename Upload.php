@@ -2,33 +2,33 @@
 	class Upload {
 		private $fileName;
 		private $fileSize;
+		private $fileMaxSize;
 		private $fileType;
 		private $fileFolder;
 		private $fileCode;
 		private $rectHeight;
 		private $rectWidth;
 		private $squareDim;
-		private $FileShape;
+		private $fileShape;
 		private $fileCropPosition;
 		private $fileExtension;
 		private $fileAllExtension;
 		private $fileAdress;
 
 
-		public function __construct($name,$size,$maxsize,$type,$folder,$fileExtension,$fileAllExtension){
+		public function __construct($name,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension){
 
 			$this->fileName = $name;
 			$this->fileSize = $size;
 			$this->fileSize = $maxsize;
 			$this->fileType = $type;
 			$this->fileFolder = $folder;
-			$this->rectHeight = md5(uniqid(mt_rand()));
-			$this->rectHeight = '';
-			$this->rectWidth = '';
-			$this->squareDim = '';
-			$this->rectHeight = '';
-			$this->fileShape = '';
-			$this->fileCropPosition = '';
+			$this->fileCode = md5(uniqid(mt_rand()));
+			$this->rectHeight = $rectHeight;
+			$this->rectWidth = $rectWidth;
+			$this->squareDim = $squareDim;
+			$this->fileShape = $fileShape;
+			$this->fileCropPosition = $fileCropPosition;
 			$this->fileExtension = strtolower( substr( strrchr($this->fileName, '.') ,1));;
 			$this->fileAllExtension = $fileAllExtension;
 			$this->fileAdress = $this->fileAdress();
