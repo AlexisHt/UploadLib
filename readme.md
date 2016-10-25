@@ -53,3 +53,33 @@ Cette methode va permettre de :
 
 Si c'est une image :
 * redimensionner l'image ou la rogner
+
+##Utilisation de la fonction
+
+Vous pourrez utiliser la fonction de la manière suivante :
+```
+  include('Upload.php');
+
+    $upload = new Upload($file['name'],$file['tmp_name'],$file['size'],$size,$file['type'],$dossier,$rectangleHeight,$rectangleWidth,$carreDim,$form,$position,$ext,$name);
+
+```
+Avec comme arguments :
+* $file['name'] étant le nom du fichier uploadé ($\_FILES["name"])
+* $file['tmp_name'] étant le nom temporaire du fichier uploadé ($\_FILES["tmp_name"])
+* $file['size'] étant le poid du fichier uploadé ($\_FILES["tmp_name"])
+* $size étant le poid maximum que peut avoir un fichier uploadé
+* $file['type'] étant le type du fichier uploadé ($\_FILES["tmp_name"])
+* $dossier étant le nom du dossier de destination
+* $rectangleHeight étant la hauteur du rectangle resizé si l'image est au format portrait
+* $rectangleWidth étant la largeur du rectangle resizé si l'image est au format paysage
+* $carreDim étant la largeur d'un coté du carré resizé
+* $form étant la forme finale voulue de l'image (carré ou rectangle)
+* $position Indiquez ici soit :
+    * la valeur: « gauche » si votre image d’origine est en format paysage et que vous souhaitez une image finale faisant un crop à partir de la partie la plus à gauche de l’image de base
+    * la valeur: « centre » si votre image d’origine est en format paysage et que vous souhaitez une image finale faisant un crop à partir de la partie la plus eau centre de l’image de base
+    * la valeur: « droite » si votre image d’origine est en format paysage et que vous souhaitez une image finale faisant un crop à partir de la partie la plus à droite de l’image de base
+    * la valeur: « haut » si votre image d’origine est en format portrait et que vous souhaitez une image finale faisant un crop à partir de la partie la plus haute de l’image de base
+    * la valeur: « centre2 » si votre image d’origine est en format portrait et que vous souhaitez une image finale faisant un crop à partir de la partie la plus centrée de l’image de base
+    * la valeur: « bas » si votre image d’origine est en format portrait et que vous souhaitez une image finale faisant un crop à partir de la partie la plus basse de l’image de base
+* $ext étant la forme finale voulue de l'image (carré ou rectangle)
+* $name étant le nom choisit pour le fichier final (optionnel)
