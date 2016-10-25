@@ -37,6 +37,7 @@
 								$file_ary[$i][$key] = $_FILES['ch_file'][$key][$i];
 						}
 				}
+				$fileAllExtension= array('pdf', 'png', 'jpeg');
 
 				$fileAllExtension= array('pdf', 'png', 'jpeg');
 
