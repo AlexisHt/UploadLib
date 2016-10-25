@@ -106,8 +106,8 @@
            		$image = $image_fonction($this->fileAdress);
            		$width = imagesx($image);
 				$height = imagesy($image);
-				var_dump($this->fileShape);exit;
-				if ($this->FileShape = "rectangle" ) {
+
+				if ($this->fileShape == "rectangle" ) {
 
 					if(!empty($this->$rectWidth) || !empty($this->$rectHeight)){
 
@@ -144,7 +144,7 @@
 
 				}
 
-				else if($this->FileShape = "carre" && $width == $height){
+				else if($this->fileShape = "carre"){
 
 						if($this->$squareDim){
 
