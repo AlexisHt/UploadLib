@@ -17,10 +17,9 @@
 
 
 		public function __construct($name,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension){
-
 			$this->fileName = $name;
 			$this->fileSize = $size;
-			$this->fileSize = $maxsize;
+			$this->fileMaxSize = $maxsize;
 			$this->fileType = $type;
 			$this->fileFolder = $folder;
 			$this->fileCode = md5(uniqid(mt_rand()));
@@ -43,7 +42,7 @@
 					throw new InvalidArgumentException("Poid du fichier invalide !");
 			}
 
-			if (self::_image())
+			if (self::_isImage())
 			{
 					$this->resizeImage();
 			}
@@ -65,7 +64,8 @@
 		}
 
 		private function _checkSize(){
-			if($this->maxsize > $this->size){
+
+			if($this->fileMaxSize > $this->fileSize){
 				return true;
 			}
 			else{
