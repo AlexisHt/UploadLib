@@ -127,7 +127,9 @@
 
 				} 
 
-				if ($this->fileShape == "rectangle" ) {
+
+				if ($this->FileShape = "rectangle" ) {
+
 
 					if(!empty($this->$rectWidth) || !empty($this->$rectHeight)){
 
