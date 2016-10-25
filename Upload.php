@@ -105,7 +105,7 @@
 
 				if ($this->FileShape = "rectangle" ) {
 
-					if(!empty($this->$rectWidth) || !empty($this->$rectHeight){
+					if(!empty($this->$rectWidth) || !empty($this->$rectHeight)){
 
 					$new_width = $this->rectWidth;
 					$new_height = $this->$rectHeight;
@@ -140,7 +140,7 @@
 
 				}
 
-				else if($this->FileShape = "carre" && $width == $height)){
+				else if($this->FileShape = "carre" && $width == $height){
 
 						if($this->$squareDim){
 
