@@ -95,7 +95,7 @@
 
 		private function resizeImage(){
 
-			if (!self::_isImage) {
+			if (!self::_isImage()) {
 				throw new Exception("Error Processing Request", 1);
 			}
 
@@ -164,15 +164,33 @@
 							$new_height =  ($new_width * $height) / $width;
 							$resize = imagecreatetruecolor($new_width,$new_height);
 
-							if($position == 'centre2'){
+						if($width<$height)
+						{
+
+							if($this->fileCropPosition == 'centre2'){
 								imagecopyresized($resize, $image, 0, 0, 0, (($new_height-$new_width)/2), $new_width, $new_height, $width, $height);
 							}
-							else if($position == 'haut'){
+							else if($this->fileCropPosition == 'haut'){
 								imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 							}
-							else if($position == 'bas'){
+							else if($this->fileCropPosition == 'bas'){
 								imagecopyresized($resize, $image, 0, 0, 0, ($new_height-$new_width), $new_width, $new_height, $width, $height);
 							}
+
+						}
+						else
+						{
+
+							if($this->fileCropPosition == 'centre'){
+								imagecopyresized($resize, $image, (($new_height-$new_width)/2), 0, 0, 0, $new_width, $new_height, $width, $height);
+							}
+							else if($this->fileCropPosition == 'gauche'){
+								imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+							}
+							else if($this->fileCropPosition == 'droite'){
+								imagecopyresized($resize, $image, ($new_height-$new_width), 0, 0, 0, $new_width, $new_height, $width, $height);
+							}
+						}
 
 							$resize= imagecreatetruecolor($new_width,$new_height);
 							imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
