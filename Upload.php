@@ -55,8 +55,7 @@
 		}
 
 		private function _checkExtension(){
-
-			if(in_array($this->fileExtension, $this->fileAllExtension)){
+			if(in_array($this->fileExtension, $this->$fileAllExtension)){
 				return true;
 			}
 			else{
@@ -110,7 +109,7 @@
 
 					$new_width = $this->rectWidth;
 					$new_height = $this->$rectHeight;
-
+					
 					}
 					else{
 
@@ -118,7 +117,7 @@
 					$new_height = $height;
 
 					}
-
+						
 						if($width>$height)
 						{
 							//format horizontal
@@ -147,7 +146,7 @@
 
 						$new_width = $this->$squareDim;
 						$new_height = $this->$squareDim;
-
+						
 						}
 						else{
 
@@ -155,8 +154,8 @@
 						$new_height = $height;
 
 						}
-
-
+						
+					
 							$new_width = $this->$squareDim;
 							$new_height =  ($new_width * $height) / $width;
 							$resize = imagecreatetruecolor($new_width,$new_height);
