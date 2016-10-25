@@ -126,21 +126,15 @@
            		$width = imagesx($image);
 				$height = imagesy($image);
 
+
 				if ($this->fileShape == "rectangle" ) {
 
 
 					if(!empty($this->rectWidth) || !empty($this->rectHeight)){
 
-					$new_width = $this->rectWidth;
-					$new_height = $this->rectHeight;
-
-					}
-					else{
-
-					$new_width = $width;
-					$new_height = $height;
-
-					}
+						$image = ImageCreateFromJPEG($this->fileAdress);
+						$width = imagesx($image);
+						$height = imagesy($image);
 
 						if($width>$height)
 						{
@@ -156,15 +150,13 @@
 						}
 
 
-						$resize= imagecreatetruecolor($new_width,$new_height);
-						imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-						$format = 'Image' . $extension_upload;
-						$image = $format($resize, $this->fileAdress);
-
-               			imagedestroy($image);
-
+						$thumb = imagecreatetruecolor($new_width,$new_height);
+						imagecopyresized($thumb, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+						ImageJPEG($thumb,$this->fileAdress);
+						//chmod ("uploaded/".$adresse."jpg", 0644);
+						imagedestroy($image);
 				}
-
+}
 				else if($this->fileShape == "carre"){
 
 						if($this->squareDim){
@@ -224,8 +216,6 @@
 				}
 			}
 		}
-
-
 }
 
 ?>
