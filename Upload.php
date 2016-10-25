@@ -19,7 +19,7 @@
 
 		public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension){
 			$this->fileName = $name;
-			$this->fileTmpName = $tmpname;			
+			$this->fileTmpName = $tmpname;
 			$this->fileSize = $size;
 			$this->fileMaxSize = $maxsize;
 			$this->fileType = $type;
@@ -95,7 +95,7 @@
 
 		private function resizeImage(){
 
-			if (!self::_isImage) {
+			if (!self::_isImage()) {
 				throw new Exception("Error Processing Request", 1);
 			}
 
