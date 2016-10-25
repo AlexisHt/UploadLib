@@ -5,11 +5,7 @@ Création d'une fonction d'upload modulable et réutilisable en POO.
 
 ##Adresse de Prod
 
-[prod](http://angehrn.etudiant-eemi.com/perso/prod/groupe1_dharcourt_angehrn)
-
-##Adresse de Preprod
-
-[test](http://angehrn.etudiant-eemi.com/perso/test/groupe1_dharcourt_angehrn)
+[prod](http://angehrn.etudiant-eemi.com/perso/groupe1_dharcourt_angehrn/uploadView.php)
 
 
 ###Fonctionnalités Générales
@@ -57,13 +53,15 @@ Si c'est une image :
 ##Utilisation de la fonction
 
 Vous pourrez utiliser la fonction de la manière suivante :
+
 ```
   include('Upload.php');
 
     $upload = new Upload($file['name'],$file['tmp_name'],$file['size'],$size,$file['type'],$dossier,$rectangleHeight,$rectangleWidth,$carreDim,$form,$position,$ext,$name);
 
 ```
-Avec comme arguments :
+###Avec comme arguments
+
 * $file['name'] étant le nom du fichier uploadé ($\_FILES["name"])
 * $file['tmp_name'] étant le nom temporaire du fichier uploadé ($\_FILES["tmp_name"])
 * $file['size'] étant le poid du fichier uploadé ($\_FILES["tmp_name"])
