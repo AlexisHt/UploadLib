@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-		<title></title>		
+		<title></title>
 		<meta charset="UTF-8"></meta>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
@@ -10,7 +10,7 @@
 	<body>
 		<h1> Upload de fichier </h1>
 
-		<?php 
+		<?php
 			if(isset($_GET["taille"])){
 			echo "<div class='alert alert-danger' role='alert'>Attention, la taille du fichier est trop grande</div>";
 			}
@@ -23,11 +23,30 @@
 			else if(isset($_GET["notif"])&&($_GET["notif"] == "ok")){
 			echo "<div class='alert alert-success' role='alert'>Votre Upload a été correctement effectué !</div>";
 			}
+
+
+			if(isset($_POST['ch_dossier'])){
+				include('Upload.php');
+
+				$file_ary = array();
+				$file_count = count($_FILES['ch_file']['name']);
+				$file_keys = array_keys($_FILES['ch_file']);
+
+				for ($i=0; $i<$file_count; $i++) {
+						foreach ($file_keys as $key) {
+								$file_ary[$i][$key] = $_FILES['ch_file'][$key][$i];
+						}
+				}
+
+				foreach ($file_ary as $file) {
+					$upload = new Upload($file['name'],$file['size'],$_POST['ch_size'],$file['type'],$_POST['ch_dossier'],$_POST['ch_rectangle_height'],$_POST['ch_rectangle_width'],$_POST['ch_carre_dim'],$_POST['ch_rectangle'],$_POST['ch_form'],$fileAllExtension);
+				}
+			}
 		?>
-		
+
 		<div class="well">
-		<form method="post" action="?module=upload&action=upload" id="myForm" enctype="multipart/form-data">
-			
+		<form method="post" action="" id="myForm" enctype="multipart/form-data">
+
 				<label for="ch_file"><b>Fichier :</b></label><br />
 				<input type="file" name="ch_file[]" id="mon_fichier" required/><br />
 				<div id="input-bloc"></div>
@@ -61,7 +80,7 @@
 				</div>
 
 				<div id="ch_rectangle_dim">
-					
+
 					<p><b>Si l'image est en format portrait, quelle est la hauteur que vous voulez qu'elle ait?</b></p>
 					<div class="input-group">
 					  <span class="input-group-addon" id="basic-addon1">L</span>
@@ -87,9 +106,9 @@
 					  <span class="input-group-addon" id="basic-addon1">L</span>
 					  <input type="number" name="ch_size" class="form-control" placeholder="taille en octets" aria-describedby="basic-addon1">
 					</div>
-				
+
 				<input type="submit" class="btn-primary" name="submit" value="Uploader" />
-			
+
 		</form>
 		</div>
 	</body>
