@@ -37,9 +37,8 @@
 								$file_ary[$i][$key] = $_FILES['ch_file'][$key][$i];
 						}
 				}
-				$fileAllExtension= array('pdf', 'png', 'jpeg');
+				$fileAllExtension= array('pdf', 'png', 'jpeg', 'jpg');
 
-				$fileAllExtension= array('pdf', 'png', 'jpeg');
 
 				foreach ($file_ary as $file) {
 					$upload = new Upload($file['name'],$file['tmp_name'],$file['size'],$_POST['ch_size'],$file['type'],$_POST['ch_dossier'],$_POST['ch_rectangle_height'],$_POST['ch_rectangle_width'],$_POST['ch_carre_dim'],$_POST['ch_rectangle'],$_POST['ch_form'],$fileAllExtension);
