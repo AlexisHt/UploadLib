@@ -34,6 +34,7 @@ Création d'une fonction d'upload modulable et réutilisable en POO.
 * fileExtension  - correspond a l'extension du fichier
 * fileAllExtension  - correspond au tableau des extensions choisies
 * fileAdress  - correspond a l'adresse finale du fichier
+* fileCustomName  - correspond a un nom personnalisé du fichier final (optionnel)
 
  Tous ces attributs sont private
 
@@ -44,7 +45,7 @@ Cette methode va permettre de :
 * initialiser toutes les données
 * gérer les extensions
 * gérer la taille du fichier
-* déplacer le fichier
+* renommenr et déplacer le fichier
 * vérifier si c'est une image
 
 Si c'est une image :
