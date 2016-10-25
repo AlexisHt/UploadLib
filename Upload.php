@@ -151,7 +151,8 @@
 
 						$thumb = imagecreatetruecolor($new_width,$new_height);
 						imagecopyresized($thumb, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-						ImageJPEG($thumb,$this->fileAdress);
+						$format = 'Image' . $extension_upload;
+										$format($thumb, $this->fileAdress);
 						//chmod ("uploaded/".$adresse."jpg", 0644);
 						imagedestroy($image);
 
