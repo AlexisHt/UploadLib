@@ -41,7 +41,7 @@
 
 
 				foreach ($file_ary as $file) {
-					$upload = new Upload($file['name'],$file['tmp_name'],$file['size'],$_POST['ch_size'],$file['type'],$_POST['ch_dossier'],$_POST['ch_rectangle_height'],$_POST['ch_rectangle_width'],$_POST['ch_carre_dim'],$_POST['ch_rectangle'],$_POST['ch_form'],$fileAllExtension);
+					$upload = new Upload($file['name'],$file['tmp_name'],$file['size'],$_POST['ch_size'],$file['type'],$_POST['ch_dossier'],$_POST['ch_rectangle_height'],$_POST['ch_rectangle_width'],$_POST['ch_carre_dim'],$_POST['ch_rectangle'],$_POST['ch_form'],$fileAllExtension,$_POST['ch_custom_name']);
 				}
 			}
 		?>
@@ -56,6 +56,12 @@
 				<span class="glyphicon glyphicon-minus" id="moins" aria-hidden="true"></span>
 				<p id="text-plus"> Ajouter plus de photos </p>
 				<div class="clear"></div>
+
+				<p><b>Nom du fichier (par défaut une chaine de caractères aléatoire)</b></p>
+					<div class="input-group">
+					  <span class="input-group-addon" id="basic-addon1">L</span>
+					  <input type="text" name="ch_custom_name" class="form-control" placeholder="par exemple avatar-jean" aria-describedby="basic-addon1">
+					</div>
 
 				<p>	<b>Quelle forme voulez-vous comme images finales ?</b></p>
 				<label class="radio-inline"><input type="radio" class="ch_rectangle" name="ch_rectangle" value="carre">Carré</label>
@@ -100,7 +106,7 @@
 				<p><b>Dans quel dossier voulez-vous uploader les images ? (indiquez le chemin) </b></p>
 				<div class="input-group">
 				  <span class="input-group-addon" id="basic-addon1">l</span>
-				  <input type="text" name="ch_dossier" class="form-control" placeholder="assets/images pour l'exemple" aria-describedby="basic-addon1" >
+				  <input type="text" name="ch_dossier" class="form-control" placeholder="images pour l'exemple" aria-describedby="basic-addon1" >
 				</div>
 
 				<p><b>Taille Maximale de la pièce jointe</b></p>

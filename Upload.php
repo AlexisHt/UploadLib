@@ -15,9 +15,9 @@
 		private $fileExtension;
 		private $fileAllExtension;
 		private $fileAdress;
+		private $fileCustomName;
 
-
-		public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension){
+		public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension,$fileCustomName){
 			$this->fileName = $name;
 			$this->fileTmpName = $tmpname;
 			$this->fileSize = $size;
@@ -32,6 +32,7 @@
 			$this->fileCropPosition = $fileCropPosition;
 			$this->fileExtension = strtolower( substr( strrchr($this->fileName, '.') ,1));;
 			$this->fileAllExtension = $fileAllExtension;
+			$this->fileCustomName = $fileCustomName;
 			$this->fileAdress = $this->fileAdress();
 
 			if (!self::_checkExtension())
@@ -56,8 +57,17 @@
 
 		}
 
+	
 		private function fileAdress(){
-			return $adresse = $this->fileFolder."/".$this->fileCode.".".$this->fileExtension;
+
+
+			if(!empty($this->fileCustomName)){
+				return $adresse = $this->fileFolder."/".$this->fileCustomName.".".$this->fileExtension;
+			}
+			else
+			{
+				return $adresse = $this->fileFolder."/".$this->fileCode.".".$this->fileExtension;
+			}
 		}
 
 		private function _checkExtension(){
