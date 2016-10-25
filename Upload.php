@@ -102,12 +102,32 @@
 			else
 			{
 
-				$image_fonction = "ImageCreateFrom" . $this->fileExtension;
+				if (in_array($this->fileExtension)){
+
+			            switch ($this->fileExtension) {
+			                case 'jpg';
+			                case 'jpeg';
+			                    $extension_upload = "jpeg";
+			                    break;
+			                case 'png':
+			                    $extension_upload = "png";
+			                    break;
+			                case 'gif':
+			                    $extension_upload = "gif";
+			                     break;
+		                    case 'svg':
+			                    $extension_upload = "svg";
+			                     break;
+			            }
+
+				$image_fonction = "ImageCreateFrom" . $extension_upload;
            		$image = $image_fonction($this->fileAdress);
            		$width = imagesx($image);
 				$height = imagesy($image);
 
-				if ($this->FileShape = "rectangle" ) {
+				} 
+
+				if ($this->fileShape == "rectangle" ) {
 
 					if(!empty($this->$rectWidth) || !empty($this->$rectHeight)){
 
@@ -137,14 +157,14 @@
 
 						$resize= imagecreatetruecolor($new_width,$new_height);
 						imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-						$format = 'Image' . $this->fileExtension;
+						$format = 'ImageCreateFrom' . $this->fileExtension;
                			$format($resize, $this->fileAdress);
 
                			imagedestroy($image);
 
 				}
 
-				else if($this->FileShape = "carre" && $width == $height){
+				else if($this->fileShape == "carre"){
 
 						if($this->$squareDim){
 
