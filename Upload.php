@@ -89,7 +89,7 @@
 			}
 		}
 
-		public function resizeImage(){
+		private function resizeImage(){
 
 			if (!self::_isImage) {
 				throw new Exception("Error Processing Request", 1);
