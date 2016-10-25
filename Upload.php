@@ -56,7 +56,7 @@
 
 		private function _checkExtension(){
 
-			if(in_array($this->fileExtension, $this->$fileAllExtension)){
+			if(in_array($this->fileExtension, $this->fileAllExtension)){
 				return true;
 			}
 			else{
