@@ -24,8 +24,6 @@
 			echo "<div class='alert alert-success' role='alert'>Votre Upload a été correctement effectué !</div>";
 			}
 		?>
-
-		<p style="text-align:center" ><a class="btn btn-primary" href="?module=mail&action=index" role="button"> Tester la fonction mail </a></p>
 		
 		<div class="well">
 		<form method="post" action="?module=upload&action=upload" id="myForm" enctype="multipart/form-data">
@@ -90,7 +88,7 @@
 					  <input type="number" name="ch_size" class="form-control" placeholder="taille en octets" aria-describedby="basic-addon1">
 					</div>
 				
-				<input type="submit" class="btn-primary" name="submit" value="Envoyer" />
+				<input type="submit" class="btn-primary" name="submit" value="Uploader" />
 			
 		</form>
 		</div>
