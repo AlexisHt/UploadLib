@@ -106,7 +106,7 @@
            		$image = $image_fonction($this->fileAdress);
            		$width = imagesx($image);
 				$height = imagesy($image);
-
+				var_dump($this->fileShape);exit;
 				if ($this->FileShape = "rectangle" ) {
 
 					if(!empty($this->$rectWidth) || !empty($this->$rectHeight)){
