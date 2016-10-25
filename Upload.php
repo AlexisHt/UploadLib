@@ -157,7 +157,7 @@
 
 						$resize= imagecreatetruecolor($new_width,$new_height);
 						imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-						$format = 'ImageCreateFrom' . $this->fileExtension;
+						$format = 'ImageCreateFrom' . $extension_upload;
                			$format($resize, $this->fileAdress);
 
                			imagedestroy($image);
