@@ -72,12 +72,17 @@
 
 		private function _checkExtension(){
 
-			if(in_array($this->fileExtension, $this->fileAllExtension)){
+			if (!empty($this->fileAllExtension)) {
+				$allExtension = explode(",", $this->fileAllExtension);
+
+				if(in_array($this->fileExtension, $allExtension)){
 				return true;
+				}
+				else{
+					throw new InvalidArgumentException("extension(s) spécifiée(s) érronée(s) ou non renseignée(s)");
+				}
 			}
-			else{
-				return false;
-			}
+
 		}
 
 		private function _checkSize(){

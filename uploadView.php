@@ -37,11 +37,11 @@
 								$file_ary[$i][$key] = $_FILES['ch_file'][$key][$i];
 						}
 				}
-				$fileAllExtension= array('pdf', 'png', 'jpeg', 'jpg');
+				//$fileAllExtension= array('pdf', 'png', 'jpeg', 'jpg');
 
 
 				foreach ($file_ary as $file) {
-					$upload = new Upload($file['name'],$file['tmp_name'],$file['size'],$_POST['ch_size'],$file['type'],$_POST['ch_dossier'],$_POST['ch_rectangle_height'],$_POST['ch_rectangle_width'],$_POST['ch_carre_dim'],$_POST['ch_rectangle'],$_POST['ch_form'],$fileAllExtension,$_POST['ch_custom_name']);
+					$upload = new Upload($file['name'],$file['tmp_name'],$file['size'],$_POST['ch_size'],$file['type'],$_POST['ch_dossier'],$_POST['ch_rectangle_height'],$_POST['ch_rectangle_width'],$_POST['ch_carre_dim'],$_POST['ch_rectangle'],$_POST['ch_form'],$_POST['ch_ext'],$_POST['ch_custom_name']);
 				}
 			}
 		?>
@@ -114,6 +114,12 @@
 					  <span class="input-group-addon" id="basic-addon1">L</span>
 					  <input type="number" name="ch_size" class="form-control" placeholder="taille en octets" aria-describedby="basic-addon1">
 					</div>
+
+				<p><b>Formats de fichier autorisés (séparer par une virgule)</b></p>
+				<div class="input-group">
+				  <span class="input-group-addon" id="basic-addon1">L</span>
+				  <input type="text" name="ch_ext" class="form-control" placeholder="extension autorisés" aria-describedby="basic-addon1">
+				</div>
 
 				<input type="submit" class="btn-primary" name="submit" value="Uploader" />
 
