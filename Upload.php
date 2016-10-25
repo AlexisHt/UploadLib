@@ -19,7 +19,7 @@
 
 		public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension){
 			$this->fileName = $name;
-			$this->fileTmpName = $tmpname;
+			$this->fileTmpName = $tmpname;			
 			$this->fileSize = $size;
 			$this->fileMaxSize = $maxsize;
 			$this->fileType = $type;
@@ -102,6 +102,8 @@
 			else
 			{
 
+				if (in_array($this->fileExtension)){
+
 			            switch ($this->fileExtension) {
 			                case 'jpg';
 			                case 'jpeg';
@@ -116,16 +118,14 @@
 		                    case 'svg':
 			                    $extension_upload = "svg";
 			                     break;
-									}
+			            }
 
 				$image_fonction = "ImageCreateFrom" . $extension_upload;
-
            		$image = $image_fonction($this->fileAdress);
-
            		$width = imagesx($image);
 				$height = imagesy($image);
 
-				}
+				} 
 
 				if ($this->fileShape == "rectangle" ) {
 
@@ -157,8 +157,8 @@
 
 						$resize= imagecreatetruecolor($new_width,$new_height);
 						imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-						$format = 'ImageCreateFrom' . $extension_upload;
-						$image = $format($this->fileAdress);
+						$format = 'ImageCreateFrom' . $this->fileExtension;
+               			$format($resize, $this->fileAdress);
 
                			imagedestroy($image);
 
@@ -166,10 +166,10 @@
 
 				else if($this->fileShape == "carre"){
 
-						if($this->squareDim){
+						if($this->$squareDim){
 
-						$new_width = $this->squareDim;
-						$new_height = $this->squareDim;
+						$new_width = $this->$squareDim;
+						$new_height = $this->$squareDim;
 
 						}
 						else{
@@ -180,8 +180,8 @@
 						}
 
 
-							$new_width = $this->squareDim;
-							$new_height = ($new_width * $height) / $width;
+							$new_width = $this->$squareDim;
+							$new_height =  ($new_width * $height) / $width;
 							$resize = imagecreatetruecolor($new_width,$new_height);
 
 						if($width<$height)
@@ -214,7 +214,7 @@
 
 							$resize= imagecreatetruecolor($new_width,$new_height);
 							imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-							$format = 'Image' . $extension_upload;
+							$format = 'Image' . $this->fileExtension;
 	               			$format($resize, $this->fileAdress);
 
 	               			imagedestroy($image);
@@ -225,6 +225,6 @@
 		}
 
 
-
+}
 
 ?>
