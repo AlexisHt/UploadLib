@@ -129,10 +129,10 @@
 				if ($this->fileShape == "rectangle" ) {
 
 
-					if(!empty($this->$rectWidth) || !empty($this->$rectHeight)){
+					if(!empty($this->rectWidth) || !empty($this->rectHeight)){
 
 					$new_width = $this->rectWidth;
-					$new_height = $this->$rectHeight;
+					$new_height = $this->rectHeight;
 
 					}
 					else{
@@ -155,10 +155,11 @@
 							$new_width = ($new_height * $width) / $height;
 						}
 
+
 						$resize= imagecreatetruecolor($new_width,$new_height);
 						imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-						$format = 'ImageCreateFrom' . $extension_upload;
-						$image = $format($this->fileAdress);
+						$format = 'Image' . $extension_upload;
+						$image = $format($resize, $this->fileAdress);
 
                			imagedestroy($image);
 
