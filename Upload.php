@@ -1,6 +1,7 @@
 <?php
 	class Upload {
 		private $fileName;
+		private $fileTmpName;
 		private $fileSize;
 		private $fileMaxSize;
 		private $fileType;
@@ -16,8 +17,9 @@
 		private $fileAdress;
 
 
-		public function __construct($name,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension){
+		public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension){
 			$this->fileName = $name;
+			$this->fileTmpName = $tmpname;			
 			$this->fileSize = $size;
 			$this->fileMaxSize = $maxsize;
 			$this->fileType = $type;
@@ -42,9 +44,14 @@
 					throw new InvalidArgumentException("Poid du fichier invalide !");
 			}
 
-			if (self::_isImage())
-			{
-					$this->resizeImage();
+			if (!move_uploaded_file($this->fileTmpName, $this->fileAdress)){
+				throw new InvalidArgumentException("Problème de upload !");
+			}
+			else{
+				if (self::_isImage())
+				{
+						$this->resizeImage();
+				}
 			}
 
 		}
@@ -84,11 +91,7 @@
 			}
 		}
 
-		function upload(){
-			if (!move_uploaded_file($this->fileName, $this->fileAdress)){
-				throw new InvalidArgumentException("Problème de upload !");
-			}
-		}
+
 
 		private function resizeImage(){
 
