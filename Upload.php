@@ -95,6 +95,7 @@
 
 		private function resizeImage(){
 
+
 			if (!self::_isImage()) {
 				throw new Exception("Error Processing Request", 1);
 			}
@@ -116,7 +117,7 @@
 		                    case 'svg':
 			                    $extension_upload = "svg";
 			                     break;
-									}
+							}
 
 				$image_fonction = "ImageCreateFrom" . $extension_upload;
 
@@ -125,10 +126,7 @@
            		$width = imagesx($image);
 				$height = imagesy($image);
 
-				}
-
-
-				if ($this->FileShape = "rectangle" ) {
+				if ($this->fileShape == "rectangle" ) {
 
 
 					if(!empty($this->$rectWidth) || !empty($this->$rectHeight)){
@@ -227,6 +225,6 @@
 		}
 
 
-
+}
 
 ?>
