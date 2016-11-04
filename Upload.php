@@ -1,154 +1,159 @@
 <?php
-	class Upload {
-		private $fileName;
-		private $fileTmpName;
-		private $fileSize;
-		private $fileMaxSize;
-		private $fileType;
-		private $fileFolder;
-		private $fileCode;
-		private $rectHeight;
-		private $rectWidth;
-		private $squareDim;
-		private $fileShape;
-		private $fileCropPosition;
-		private $fileExtension;
-		private $fileAllExtension;
-		private $fileAdress;
-		private $fileCustomName;
+class Upload {
+	private $fileName;
+	private $fileTmpName;
+	private $fileSize;
+	private $fileMaxSize;
+	private $fileType;
+	private $fileFolder;
+	private $fileCode;
+	private $rectHeight;
+	private $rectWidth;
+	private $squareDim;
+	private $fileShape;
+	private $fileCropPosition;
+	private $fileExtension;
+	private $fileAllExtension;
+	private $fileAdress;
+	private $fileCustomName;
 
-		public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension,$fileCustomName){
-			$this->fileName = $name;
-			$this->fileTmpName = $tmpname;
+	public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension,$fileCustomName){
+		$this->fileName = $name;
+		$this->fileTmpName = $tmpname;
+		$this->fileMaxSize = $maxsize;
+		$this->fileType = $type;
+		$this->fileCode = md5(uniqid(mt_rand()));
+		$this->rectHeight = $rectHeight;
+		$this->rectWidth = $rectWidth;
+		$this->squareDim = $squareDim;
+		$this->fileShape = $fileShape;
+		$this->fileCropPosition = $fileCropPosition;
+		$this->fileExtension = strtolower( substr( strrchr($this->fileName, '.') ,1));;
+		$this->fileCustomName = $fileCustomName;
+		$this->fileAdress = $this->fileAdress();
+
+		if($fileSize != NULL){
 			$this->fileSize = $size;
-			$this->fileMaxSize = $maxsize;
-			$this->fileType = $type;
-			if($folder != NULL){
-				$this->fileFolder = $folder;
-			}else{
-				throw new InvalidArgumentException("Dossier de destination non renseigné !");
-			}
-			$this->fileCode = md5(uniqid(mt_rand()));
-			$this->rectHeight = $rectHeight;
-			$this->rectWidth = $rectWidth;
-			$this->squareDim = $squareDim;
-			$this->fileShape = $fileShape;
-			$this->fileCropPosition = $fileCropPosition;
-			$this->fileExtension = strtolower( substr( strrchr($this->fileName, '.') ,1));;
-			if($fileAllExtension != NULL){
-				$this->fileAllExtension = $fileAllExtension;
-			}else{
-				throw new InvalidArgumentException("Extensions non renseignées !");
-			}
-
-			$this->fileCustomName = $fileCustomName;
-
-			$this->fileAdress = $this->fileAdress();
-
-			if (!self::_checkExtension())
-			{
-					throw new InvalidArgumentException("Extension invalide !");
-			}
-
-			if (!self::_checkSize())
-			{
-					throw new InvalidArgumentException("Poid du fichier invalide !");
-			}
-
-			if (!move_uploaded_file($this->fileTmpName, $this->fileAdress)){
-				throw new InvalidArgumentException("Problème de upload !");
-			}
-			else{
-				if (self::_isImage())
-				{
-						$this->resizeImage();
-				}
-			}
-
+		}else{
+			throw new InvalidArgumentException("Taille Maximale non renseignée !");
 		}
 
+		if($folder != NULL){
+			$this->fileFolder = $folder;
+		}else{
+			throw new InvalidArgumentException("Dossier de destination non renseigné !");
+		}
 
-		private function fileAdress(){
+		if($fileAllExtension != NULL){
+			$this->fileAllExtension = $fileAllExtension;
+		}else{
+			throw new InvalidArgumentException("Extensions non renseignées !");
+		}
 
+		if (!self::_checkExtension())
+		{
+			throw new InvalidArgumentException("Extension invalide !");
+		}
 
-			if(!empty($this->fileCustomName)){
-				return $adresse = $this->fileFolder."/".$this->fileCustomName.".".$this->fileExtension;
-			}
-			else
+		if (!self::_checkSize())
+		{
+			throw new InvalidArgumentException("Poid du fichier invalide !");
+		}
+
+		if (!move_uploaded_file($this->fileTmpName, $this->fileAdress)){
+			throw new InvalidArgumentException("Problème de upload !");
+		}
+		else{
+			if (self::_isImage())
 			{
-				return $adresse = $this->fileFolder."/".$this->fileCode.".".$this->fileExtension;
+				$this->resizeImage();
 			}
 		}
 
-		private function _checkExtension(){
+	}
 
-			if (!empty($this->fileAllExtension)) {
-				$allExtension = explode(",", $this->fileAllExtension);
 
-				if(in_array($this->fileExtension, $allExtension)){
-				return true;
-				}
-				else{
-					throw new InvalidArgumentException("extension(s) spécifiée(s) érronée(s) ou non renseignée(s)");
-				}
-			}
+	private function fileAdress(){
 
+
+		if(!empty($this->fileCustomName)){
+			return $adresse = $this->fileFolder."/".$this->fileCustomName.".".$this->fileExtension;
 		}
+		else
+		{
+			return $adresse = $this->fileFolder."/".$this->fileCode.".".$this->fileExtension;
+		}
+	}
 
-		private function _checkSize(){
+	private function _checkExtension(){
 
-			if($this->fileMaxSize > $this->fileSize){
+		if (!empty($this->fileAllExtension)) {
+			$allExtension = explode(",", $this->fileAllExtension);
+
+			if(in_array($this->fileExtension, $allExtension)){
 				return true;
 			}
 			else{
-				return false;
+				throw new InvalidArgumentException("extension(s) spécifiée(s) érronée(s) ou non renseignée(s)");
 			}
 		}
 
-		private function _isImage(){
-			$imgExt = array('png', 'jpeg', 'gif', 'svg', 'jpg');
+	}
 
-			if(in_array($this->fileExtension, $imgExt)){
-				return true;
-			}
-			else{
-				return false;
-			}
+	private function _checkSize(){
+
+		if($this->fileMaxSize > $this->fileSize){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	private function _isImage(){
+		$imgExt = array('png', 'jpeg', 'gif', 'svg', 'jpg');
+
+		if(in_array($this->fileExtension, $imgExt)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+
+
+	private function resizeImage(){
+
+
+		if (!self::_isImage()) {
+			throw new Exception("Error Processing Request", 1);
 		}
 
+		else
+		{
 
-
-		private function resizeImage(){
-
-
-			if (!self::_isImage()) {
-				throw new Exception("Error Processing Request", 1);
-			}
-
-			else
-			{
-
-			            switch ($this->fileExtension) {
-			                case 'jpg';
-			                case 'jpeg';
-			                    $extension_upload = "jpeg";
-			                    break;
-			                case 'png':
-			                    $extension_upload = "png";
-			                    break;
-			                case 'gif':
-			                    $extension_upload = "gif";
-			                     break;
-		                    case 'svg':
-			                    $extension_upload = "svg";
-			                     break;
-							}
+			switch ($this->fileExtension) {
+				case 'jpg';
+				case 'jpeg';
+				$extension_upload = "jpeg";
+				break;
+				case 'png':
+				$extension_upload = "png";
+				break;
+				case 'gif':
+					$extension_upload = "gif";
+					break;
+					case 'svg':
+					$extension_upload = "svg";
+					break;
+				}
 
 				$image_fonction = "ImageCreateFrom" . $extension_upload;
 
-        $image = $image_fonction($this->fileAdress);
+				$image = $image_fonction($this->fileAdress);
 
-        $width = imagesx($image);
+				$width = imagesx($image);
 				$height = imagesy($image);
 
 
@@ -185,68 +190,67 @@
 						$thumb = imagecreatetruecolor($new_width,$new_height);
 						imagecopyresized($thumb, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 						$format = 'Image' . $extension_upload;
-										$format($thumb, $this->fileAdress);
+						$format($thumb, $this->fileAdress);
 						//chmod ("uploaded/".$adresse."jpg", 0644);
 						imagedestroy($image);
+					}
 				}
-}
 				else if($this->fileShape == "carre"){
 
-						if($this->squareDim){
+					if($this->squareDim){
 
 						$new_width = $this->squareDim;
 						$new_height = $this->squareDim;
 
-						}
-						else{
+					}
+					else{
 
 						$new_width = $width;
 						$new_height = $height;
 
+					}
+
+					$new_height = ($new_width * $height) / $width;
+					$resize = imagecreatetruecolor($new_width,$new_height);
+
+					if($width<$height)
+					{
+
+						if($this->fileCropPosition == 'centre2'){
+							imagecopyresized($resize, $image, 0, 0, 0, (($new_height-$new_width)/2), $new_width, $new_height, $width, $height);
 						}
-
-							$new_height = ($new_width * $height) / $width;
-							$resize = imagecreatetruecolor($new_width,$new_height);
-
-						if($width<$height)
-						{
-
-							if($this->fileCropPosition == 'centre2'){
-								imagecopyresized($resize, $image, 0, 0, 0, (($new_height-$new_width)/2), $new_width, $new_height, $width, $height);
-							}
-							else if($this->fileCropPosition == 'haut'){
-								imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-							}
-							else if($this->fileCropPosition == 'bas'){
-								imagecopyresized($resize, $image, 0, 0, 0, ($new_height-$new_width), $new_width, $new_height, $width, $height);
-							}
-
-						}
-						else
-						{
-
-							if($this->fileCropPosition == 'centre'){
-								imagecopyresized($resize, $image, (($new_height-$new_width)/2), 0, 0, 0, $new_width, $new_height, $width, $height);
-							}
-							else if($this->fileCropPosition == 'gauche'){
-								imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-							}
-							else if($this->fileCropPosition == 'droite'){
-								imagecopyresized($resize, $image, ($new_height-$new_width), 0, 0, 0, $new_width, $new_height, $width, $height);
-							}
-						}
-
-							$resize= imagecreatetruecolor($new_width,$new_height);
+						else if($this->fileCropPosition == 'haut'){
 							imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
-							$format = 'Image' . $extension_upload;
-	               			$format($resize, $this->fileAdress);
+						}
+						else if($this->fileCropPosition == 'bas'){
+							imagecopyresized($resize, $image, 0, 0, 0, ($new_height-$new_width), $new_width, $new_height, $width, $height);
+						}
 
-	               			imagedestroy($image);
+					}
+					else
+					{
 
+						if($this->fileCropPosition == 'centre'){
+							imagecopyresized($resize, $image, (($new_height-$new_width)/2), 0, 0, 0, $new_width, $new_height, $width, $height);
+						}
+						else if($this->fileCropPosition == 'gauche'){
+							imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+						}
+						else if($this->fileCropPosition == 'droite'){
+							imagecopyresized($resize, $image, ($new_height-$new_width), 0, 0, 0, $new_width, $new_height, $width, $height);
+						}
+					}
+
+					$resize= imagecreatetruecolor($new_width,$new_height);
+					imagecopyresized($resize, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+					$format = 'Image' . $extension_upload;
+					$format($resize, $this->fileAdress);
+
+					imagedestroy($image);
 
 				}
 			}
 		}
-}
+	}
 
-?>
+	?>
