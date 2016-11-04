@@ -15,9 +15,9 @@
 		private $fileExtension;
 		private $fileAllExtension;
 		private $fileAdress;
+		private $fileCustomName;
 
-
-		public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension){
+		public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension,$fileCustomName){
 			$this->fileName = $name;
 			$this->fileTmpName = $tmpname;
 			$this->fileSize = $size;
@@ -40,6 +40,9 @@
 			}else{
 				throw new InvalidArgumentException("Extensions non renseignées !");
 			}
+
+			$this->fileCustomName = $fileCustomName;
+
 			$this->fileAdress = $this->fileAdress();
 
 			if (!self::_checkExtension())
@@ -64,18 +67,32 @@
 
 		}
 
+
 		private function fileAdress(){
-			return $adresse = $this->fileFolder."/".$this->fileCode.".".$this->fileExtension;
+
+
+			if(!empty($this->fileCustomName)){
+				return $adresse = $this->fileFolder."/".$this->fileCustomName.".".$this->fileExtension;
+			}
+			else
+			{
+				return $adresse = $this->fileFolder."/".$this->fileCode.".".$this->fileExtension;
+			}
 		}
 
 		private function _checkExtension(){
 
-			if(in_array($this->fileExtension, $this->fileAllExtension)){
+			if (!empty($this->fileAllExtension)) {
+				$allExtension = explode(",", $this->fileAllExtension);
+
+				if(in_array($this->fileExtension, $allExtension)){
 				return true;
+				}
+				else{
+					throw new InvalidArgumentException("extension(s) spécifiée(s) érronée(s) ou non renseignée(s)");
+				}
 			}
-			else{
-				return false;
-			}
+
 		}
 
 		private function _checkSize(){
@@ -103,6 +120,7 @@
 
 		private function resizeImage(){
 
+
 			if (!self::_isImage()) {
 				throw new Exception("Error Processing Request", 1);
 			}
@@ -124,7 +142,7 @@
 		                    case 'svg':
 			                    $extension_upload = "svg";
 			                     break;
-									}
+							}
 
 				$image_fonction = "ImageCreateFrom" . $extension_upload;
 
@@ -132,7 +150,6 @@
 
         $width = imagesx($image);
 				$height = imagesy($image);
-
 
 
 				if ($this->fileShape == "rectangle" ) {
@@ -164,13 +181,13 @@
 							$new_width = ($new_height * $width) / $height;
 						}
 
+
 						$thumb = imagecreatetruecolor($new_width,$new_height);
 						imagecopyresized($thumb, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
 						$format = 'Image' . $extension_upload;
 										$format($thumb, $this->fileAdress);
 						//chmod ("uploaded/".$adresse."jpg", 0644);
 						imagedestroy($image);
-
 				}
 }
 				else if($this->fileShape == "carre"){
@@ -231,7 +248,5 @@
 			}
 		}
 }
-
-
 
 ?>
