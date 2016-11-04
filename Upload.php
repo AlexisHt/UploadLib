@@ -23,7 +23,11 @@
 			$this->fileSize = $size;
 			$this->fileMaxSize = $maxsize;
 			$this->fileType = $type;
-			$this->fileFolder = $folder;
+			if($folder != NULL){
+				$this->fileFolder = $folder;
+			}else{
+				throw new InvalidArgumentException("Dossier de destination non renseigné !");
+			}
 			$this->fileCode = md5(uniqid(mt_rand()));
 			$this->rectHeight = $rectHeight;
 			$this->rectWidth = $rectWidth;
@@ -31,7 +35,11 @@
 			$this->fileShape = $fileShape;
 			$this->fileCropPosition = $fileCropPosition;
 			$this->fileExtension = strtolower( substr( strrchr($this->fileName, '.') ,1));;
-			$this->fileAllExtension = $fileAllExtension;
+			if($fileAllExtension != NULL){
+				$this->fileAllExtension = $fileAllExtension;
+			}else{
+				throw new InvalidArgumentException("Extensions non renseignées !");
+			}
 			$this->fileAdress = $this->fileAdress();
 
 			if (!self::_checkExtension())
@@ -120,15 +128,14 @@
 
 				$image_fonction = "ImageCreateFrom" . $extension_upload;
 
-           		$image = $image_fonction($this->fileAdress);
+        $image = $image_fonction($this->fileAdress);
 
-           		$width = imagesx($image);
+        $width = imagesx($image);
 				$height = imagesy($image);
 
 
 
 				if ($this->fileShape == "rectangle" ) {
-
 
 					if(!empty($this->rectWidth) || !empty($this->rectHeight)){
 
@@ -139,13 +146,21 @@
 						if($width>$height)
 						{
 							//format horizontal
-							$new_width = $this->rectWidth;
+							if($this->rectWidth != NULL){
+								$new_width = $this->rectWidth;
+							}else{
+								$new_width = $width;
+							}
 							$new_height = ($new_width * $height) / $width ;
 						}
 						else
 						{
 							// format vertical
-							$new_height = $this->rectHeight;
+							if($this->rectHeight != NULL){
+								$new_height = $this->rectHeight;
+							}else{
+								$new_height = $height;
+							}
 							$new_width = ($new_height * $width) / $height;
 						}
 
@@ -173,8 +188,6 @@
 
 						}
 
-
-							$new_width = $this->squareDim;
 							$new_height = ($new_width * $height) / $width;
 							$resize = imagecreatetruecolor($new_width,$new_height);
 
