@@ -35,8 +35,9 @@ Création d'une fonction d'upload modulable et réutilisable en POO.
 * fileAllExtension  - correspond au tableau des extensions choisies
 * fileAdress  - correspond a l'adresse finale du fichier
 * fileCustomName  - correspond a un nom personnalisé du fichier final (optionnel)
+* log - correspond au suivi de l'upload
 
- Tous ces attributs sont private
+ Tous ces attributs sont private sauf log
 
 
 ###Arguments de la methode construct
@@ -50,6 +51,16 @@ Cette methode va permettre de :
 
 Si c'est une image :
 * redimensionner l'image ou la rogner
+
+
+###Methode getLogs
+
+Afin d'avoir des retours sur le déroulement de l'upload écrivez le code suivant:
+$logs = $upload->getLogs();
+echo $logs;
+
+Cette méthode va permettre d'afficher les différentes étapes réalisées par l'upload
+
 
 ##Utilisation de la fonction
 
