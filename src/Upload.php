@@ -221,7 +221,6 @@ class Upload {
 
 					}
 
-					$new_height = ($new_width * $height) / $width;
 					$resize = imagecreatetruecolor($new_width,$new_height);
 
 					if($width<$height)
