@@ -95,3 +95,13 @@ Vous pourrez utiliser la fonction de la manière suivante :
     * la valeur: « bas » si votre image d’origine est en format portrait et que vous souhaitez une image finale faisant un crop à partir de la partie la plus basse de l’image de base
 * $ext étant la forme finale voulue de l'image (carré ou rectangle)
 * $name étant le nom choisit pour le fichier final (optionnel)
+
+
+###Amélioration v2
+
+* Création de l'argument log et de la methode getLogs permettant d'avoir un retour sur les etapes de l'upload et de pouvoir l'afficher
+* Séparation de la fonction upload elle même et de la page de test dans les dossiers respectifs src/ et example/
+* Ajout d'exceptions en cas de non renseignement de certaines valeurs
+* Indentation et propreté du code améliorée
+* Création d'un bouton pour accéder au dossier des upload directement après upload sur la page de test
+* Adaptation du readme
