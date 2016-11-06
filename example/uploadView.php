@@ -11,22 +11,9 @@
 		<h1> Upload de fichier </h1>
 
 		<?php
-			if(isset($_GET["taille"])){
-			echo "<div class='alert alert-danger' role='alert'>Attention, la taille du fichier est trop grande</div>";
-			}
-			if(isset($_GET["format"])){
-			echo "<div class='alert alert-danger' role='alert'>Attention, le Format n'est pas pris en compte. Les formats pris en compte sont les suivants: PNG, JPEG, JPG, GIF, PDF, DOCX</div>";
-			}
-			if(isset($_GET["notif"])&&($_GET["notif"] == "nok")){
-			echo "<div class='alert alert-danger' role='alert'>Votre Upload n'a pas été correctement effectué !</div>";
-			}
-			else if(isset($_GET["notif"])&&($_GET["notif"] == "ok")){
-			echo "<div class='alert alert-success' role='alert'>Votre Upload a été correctement effectué !</div>";
-			}
-
 
 			if(isset($_POST['ch_dossier'])){
-				include('Upload.php');
+				include('../src/Upload.php');
 
 				$file_ary = array();
 				$file_count = count($_FILES['ch_file']['name']);
@@ -42,7 +29,12 @@
 
 				foreach ($file_ary as $file) {
 					$upload = new Upload($file['name'],$file['tmp_name'],$file['size'],$_POST['ch_size'],$file['type'],$_POST['ch_dossier'],$_POST['ch_rectangle_height'],$_POST['ch_rectangle_width'],$_POST['ch_carre_dim'],$_POST['ch_rectangle'],$_POST['ch_form'],$_POST['ch_ext'],$_POST['ch_custom_name']);
+					$logs = $upload->getLogs();
+					echo $logs;
+					echo "<a href='../images/'>Accéder au dossier images contenant l'upload</a>";
 				}
+
+
 			}
 		?>
 
@@ -106,7 +98,7 @@
 				<p><b>Dans quel dossier voulez-vous uploader les images ? (indiquez le chemin) </b></p>
 				<div class="input-group">
 				  <span class="input-group-addon" id="basic-addon1">l</span>
-				  <input type="text" name="ch_dossier" class="form-control" placeholder="images pour l'exemple" aria-describedby="basic-addon1" >
+				  <input type="text" name="ch_dossier" class="form-control" placeholder="../images pour l'exemple" aria-describedby="basic-addon1" >
 				</div>
 
 				<p><b>Taille Maximale de la pièce jointe</b></p>

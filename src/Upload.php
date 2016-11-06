@@ -16,11 +16,12 @@ class Upload {
 	private $fileAllExtension;
 	private $fileAdress;
 	private $fileCustomName;
+	public  $log = "";
 
 	public function __construct($name,$tmpname,$size,$maxsize,$type,$folder,$rectHeight,$rectWidth,$squareDim,$fileShape,$fileCropPosition,$fileAllExtension,$fileCustomName){
 		$this->fileName = $name;
 		$this->fileTmpName = $tmpname;
-		$this->fileMaxSize = $maxsize;
+		$this->fileSize = $size;
 		$this->fileType = $type;
 		$this->fileCode = md5(uniqid(mt_rand()));
 		$this->rectHeight = $rectHeight;
@@ -28,12 +29,11 @@ class Upload {
 		$this->squareDim = $squareDim;
 		$this->fileShape = $fileShape;
 		$this->fileCropPosition = $fileCropPosition;
-		$this->fileExtension = strtolower( substr( strrchr($this->fileName, '.') ,1));;
+		$this->fileExtension = strtolower( substr( strrchr($this->fileName, '.') ,1));
 		$this->fileCustomName = $fileCustomName;
-		$this->fileAdress = $this->fileAdress();
 
-		if($fileSize != NULL){
-			$this->fileSize = $size;
+		if($maxsize != NULL){
+			$this->fileMaxSize = $maxsize;
 		}else{
 			throw new InvalidArgumentException("Taille Maximale non renseignée !");
 		}
@@ -50,6 +50,9 @@ class Upload {
 			throw new InvalidArgumentException("Extensions non renseignées !");
 		}
 
+		$this->fileAdress = self::_fileAdress();
+		$this->log .= " Le renommage a été correctement effectué<br/>";
+
 		if (!self::_checkExtension())
 		{
 			throw new InvalidArgumentException("Extension invalide !");
@@ -59,11 +62,12 @@ class Upload {
 		{
 			throw new InvalidArgumentException("Poid du fichier invalide !");
 		}
-
 		if (!move_uploaded_file($this->fileTmpName, $this->fileAdress)){
 			throw new InvalidArgumentException("Problème de upload !");
 		}
 		else{
+			$this->log = "Le fichier à été correctement enregistré dans le dossier " . $folder . "<br/>";
+
 			if (self::_isImage())
 			{
 				$this->resizeImage();
@@ -73,7 +77,7 @@ class Upload {
 	}
 
 
-	private function fileAdress(){
+	private function _fileAdress(){
 
 
 		if(!empty($this->fileCustomName)){
@@ -94,7 +98,7 @@ class Upload {
 				return true;
 			}
 			else{
-				throw new InvalidArgumentException("extension(s) spécifiée(s) érronée(s) ou non renseignée(s)");
+				return false;
 			}
 		}
 
@@ -121,7 +125,11 @@ class Upload {
 		}
 	}
 
+	public function getLogs(){
 
+		return $this->log;
+
+	}
 
 	private function resizeImage(){
 
@@ -161,7 +169,7 @@ class Upload {
 
 					if(!empty($this->rectWidth) || !empty($this->rectHeight)){
 
-						$image = ImageCreateFromJPEG($this->fileAdress);
+						$image = $image_fonction($this->fileAdress);
 						$width = imagesx($image);
 						$height = imagesy($image);
 
@@ -193,6 +201,9 @@ class Upload {
 						$format($thumb, $this->fileAdress);
 						//chmod ("uploaded/".$adresse."jpg", 0644);
 						imagedestroy($image);
+
+						$this->log .= " L'image à été correctement redimensionnée au format rectangle<br/>";
+
 					}
 				}
 				else if($this->fileShape == "carre"){
@@ -247,6 +258,8 @@ class Upload {
 					$format($resize, $this->fileAdress);
 
 					imagedestroy($image);
+
+					$this->log .= " L'image à été correctement redimensionnée au format carré<br/>";
 
 				}
 			}
