@@ -9,9 +9,7 @@
     "require": {
         "php": "^5.5.12 || ^7.0"
     },
-    "description": {
-    	"This is an Upload library as the name implies... and don't touch it is for academic purposes only, you would not want to destroy your system with it"
-    }
-
+    
+    "description": "This is an Upload library as the name implies... and don't touch it is for academic purposes only, you would not want to destroy your system with it"
 }
 ]
