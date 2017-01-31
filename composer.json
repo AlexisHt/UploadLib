@@ -1,11 +1,8 @@
-	{
+{
     "name": "uploadLib/uploadLib",
     "description": "This is an Upload library as the name implies... and don't touch it is for academic purposes only, you would not want to destroy your system with it",
 	     "source": {
 	    	"type": "git",
 	    	"url": "https://github.com/AlexisHt/UploadLib.git"
-	    },
-	    "require": {
-	        "php": "^5.5.12 || ^7.0"
 	    }
-    }
+}
